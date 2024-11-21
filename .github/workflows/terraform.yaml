@@ -1,0 +1,50 @@
+#name of the workflow. it is just a name.
+
+name: "Terraform"
+
+#if there is any push to my main branch
+
+on:
+  push:
+      branches:
+            - main
+
+# jobs sections
+
+jobs:
+  terraform:
+      name: "Terraform"
+      runs-on: ubuntu-latest
+
+
+      env:
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          AWS_SESSION_TOKEN: ${{secrets.AWS_SESSION_TOKEN}}
+
+#the default section 
+      defaults:
+        run:
+            working-directory: src
+      steps:
+#checkout is to clone the repository to remote server and do the actions/execute the code. it copies everything and pastes it into ubuntu
+          - name: Checkout
+            uses: actions/checkout@v2
+
+#command to setup terraform
+          - name: Setup terraform
+            uses: hashicorp/setup-terraform@v1
+            with:
+              terraform_version: 1.0.1
+              terraform_wrapper: false
+
+          - name: Terraform initialisation
+            id: init
+            run: terraform init
+
+          - name: Terraform planning
+            id: plan
+            run: terraform plan
+
+          - name: Terraform apply infrastructure
+            run: terraform init -auto-approve

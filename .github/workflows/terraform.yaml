@@ -38,16 +38,23 @@ jobs:
               terraform_version: 1.0.1
               terraform_wrapper: false
 
-          - name: Terraform initialisation
+          - name: Terraform Initialization
             id: init
-            run: terraform init
+            run: terraform init  # No `-auto-approve` here, just `terraform init`
 
-          - name: Terraform planning
+          - name: Terraform Planning
             id: plan
-            run: terraform plan
+            run: terraform plan  # No `-auto-approve` needed for planning
 
+          - name: Terraform Apply Infrastructure
+            run: terraform apply -auto-approve  # Correct use of `-auto-approve`
+
+
+<<<<<<< HEAD
           #- name: Terraform apply infrastructure
             #run: terraform apply -auto-approve
 
           - name: Terraform destroy infrastructure
             run: terraform destroy -auto-approve
+=======
+>>>>>>> 12b101148164193c3f43c62eca3f0d9681cc0d9f

@@ -40,12 +40,13 @@ jobs:
 
           - name: Terraform Initialization
             id: init
-            run: terraform init  # No `-auto-approve` here
+            run: terraform init  # No `-auto-approve` here, just `terraform init`
 
           - name: Terraform Planning
             id: plan
-            run: terraform plan  # Plan step does not require `-auto-approve`
+            run: terraform plan  # No `-auto-approve` needed for planning
 
           - name: Terraform Apply Infrastructure
             run: terraform apply -auto-approve  # Correct use of `-auto-approve`
+
 
